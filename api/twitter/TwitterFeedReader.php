@@ -2,9 +2,9 @@
 /**
  * Twitter Feed Reader
  */
-
-require_once "../../vendor/autoload.php";
 require_once "TwitterKeys.php";
+
+require "../../vendor/autoload.php";
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 
