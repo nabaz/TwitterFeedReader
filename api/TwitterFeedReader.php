@@ -2,9 +2,9 @@
 /**
  * Twitter Feed Reader
  */
-require_once "TwitterKeys.php";
+require_once "twitter/TwitterKeys.php";
 
-require "../../vendor/autoload.php";
+require_once "vendor/autoload.php";
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 
@@ -29,21 +29,32 @@ class TwitterFeedReader {
     }
 
     private function getData() {
-        require "twitter";
         $c = new TwitterOAuth(API_KEY, API_SECRET, ACCESS_KEY, ACCESS_SECRET);
+
         switch ($this->type) {
             case 'user':
-                $url = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=".$this->value;
+                $twitter = $c->get("statuses/user_timeline", array(
+                    "screen_name" => $this->value,
+                    "count" => $this->limit,
+                    "include_rts" => true
+                ));
                 break;
             case 'search':
-                $url = "https://api.twitter.com/1.1/search/tweets.json?q=".$this->value;
+                $twitter = $c->get("search/tweets", array("q" => $this->value, "count" => $this->limit));
                 break;
             default:
                 trigger_error('Unknown Twitterfeed type "'.$this->type.'"', E_USER_ERROR);
         }
-        return $c->get($url."&count=".$this->limit);
+        return $twitter;
     }
 
+    public function userProfile() {
+        $c = new TwitterOAuth(API_KEY, API_SECRET, ACCESS_KEY, ACCESS_SECRET);
+
+        $userProfile = $c->get("users/show", array("screen_name" => $this->value));
+
+        return $userProfile;
+    }
     public function hasTweets() {
         return $this->tweets ? true : false;
     }
@@ -52,7 +63,7 @@ class TwitterFeedReader {
         return $this->type == $type ? true : false;
     }
 
-    public function isRT() {
+    public function isRetweet() {
         if (!$this->tweet)
             trigger_error('Unknown tweet', E_USER_ERROR);
         return isset($this->tweet->retweeted_status) ? true : false;
@@ -72,17 +83,16 @@ class TwitterFeedReader {
                 trigger_error('Unknown user', E_USER_ERROR);
         }
         if ($property) {
-            if ($echo) echo $user->$property;
-            else return $user->$property;
+           return $user->$property;
         } else
             return $user;
     }
 
     public function author($property = null, $echo = true) {
         if ($this->tweet) {
-            $author = $this->isRT() ? $this->tweet->retweeted_status->user : $this->tweet->user;
+            $author = $this->isRetweet() ? $this->tweet->retweeted_status->user : $this->tweet->user;
             $result = $this->user($property, $echo, $author);
-            if (!$echo)
+
                 return $result;
         } else
             trigger_error('Unknown tweet', E_USER_ERROR);
@@ -90,7 +100,7 @@ class TwitterFeedReader {
 
     public function tweet($property = null, $echo = true) {
         if (isset($this->tweet)) {
-            $tweet = $this->isRT() ? $this->tweet->retweeted_status : $this->tweet;
+            $tweet = $this->isRetweet() ? $this->tweet->retweeted_status : $this->tweet;
         } else
             trigger_error('Unknown tweet', E_USER_ERROR);
         if ($property) {
@@ -134,11 +144,10 @@ class TwitterFeedReader {
                 }
             }
         }
-        if ($echo)
-            echo trim($content);
-        else
+
             return trim($content);
     }
+
 
     public function searchQuery($echo = true) {
         if ($this->type == 'search') {
@@ -151,16 +160,12 @@ class TwitterFeedReader {
     }
 
     public function userAvatar($echo = true) {
-        if ($echo)
-            echo str_replace('_normal', '', $this->user('profile_image_url', false));
-        else
+
             return str_replace('_normal', '', $this->user('profile_image_url', false));
     }
 
     public function authorAvatar($echo = true) {
-        if ($echo)
-            echo str_replace('_normal', '', $this->author('profile_image_url', false));
-        else
+
             return str_replace('_normal', '', $this->author('profile_image_url', false));
     }
 

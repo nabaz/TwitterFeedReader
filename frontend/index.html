@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Twitter Feed Reader</title>
+  <link href="css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="twitterList"></div>
+
+<!-- Templates -->
+<script type="text/template" id="tpl-twitter-item">
+  <a href=''><%= name %> @<%= screen_name %></a>
+  <img src="<%= profile_img %>" width="48   "/>
+  <p><%= html %></p>
+</script>
+<!-- JavaScript -->
+
+<!-- JavaScript Includes -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script type="text/javascript" src="js/backbone-min.js"></script>
+<script type="text/javascript" src="js/twitter.js"></script>
+</body>
+
+</html>
