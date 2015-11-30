@@ -1,0 +1,9 @@
+{
+    "type": "sftp",
+    "host": "127.0.0.1",
+    "username": "vagrant",
+    "password": "vagrant",
+    "port": 2230,
+    "remotePath": "/var/www/twitterfeed",
+    "uploadOnSave": true
+}

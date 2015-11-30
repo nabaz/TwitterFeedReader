@@ -1,19 +1,20 @@
 var TwitterModel = Backbone.Model.extend({
   defaults: {
     what: '',
-    where: 'html'
+    where: 'twitter_content'
   },
   initialize: function(opts) {
     this.collection = opts.collection;
     this.filtered = new Backbone.Collection(opts.collection);
     this.on('change:what', this.filter);
+    return this;
   },
   filter: function() {
     var what = this.get('what').trim(),
-      searchFor = 'html',
+      searchFor = 'twitter_content',
       models;
 
-    if (what==='' || !what) {
+    if (what==='') {
       models = this.collection.models;
     } else {
       models = this.collection.filter(function(model) {
@@ -43,6 +44,8 @@ var CollectionView = BaseView.extend({
   initialize: function(opts) {
     this.template = opts.template;
     this.listenTo(this.collection, 'reset', this.render);
+    return this;
+
   },
   html: function() {
     var models = this.collection.map(function (model) {
@@ -62,20 +65,24 @@ var FormView = Backbone.View.extend({
   events: {
     'keyup input[name="what"]': _.throttle(function(e) {
       this.model.set('what', e.currentTarget.value);
-    }, 200)
+    }, 200),
+    load: _.throttle(function(e) {
+      console.log('hey');
+      this.model.set('what', 'open');
+    }, 200),
   }
 });
 
 var TwitterCollection =  Backbone.Collection.extend({
   model: TwitterModel,
-  url: "../api/index.php"
-
+  url: function(){
+    return "../api/index.php";
+  }
 });
 
 var twitterCollection = new TwitterCollection();
 
 var flt = new TwitterModel({collection: twitterCollection});
-
 var inputView = new FormView({
   el: 'form',
   model: flt
@@ -84,38 +91,41 @@ var listView = new CollectionView({
   template: _.template($('#template-list').html()),
   collection: flt.filtered
 });
-
 $('#content').append(listView.render().el);
 
-twitterCollection.fetch({
-  success: function () {
-    $('#twitterList').html(listView.render().el);
+var TwitterListView = Backbone.View.extend({
+  tagName: "ul",
+  render: function(eventName) {
+    _.each(this.model.models, function (tweet) {
+      $(this.el).append(new TwitterListItemView({model:tweet}).render().el);
+    }, this);
+    return this;
   }
 });
 
-//var TwitterRouter = Backbone.Router.extend({
-//
-//  routes: {
-//    "": "displayTweets"
-//  },
-//
-//  displayTweets: function() {
-//
-//  //  var twitterListView = new TwitterListView({model:twitterCollection});
-//
-//
-//
-//    twitterCollection.fetch({
-//      success: function () {
-//         $('#twitterList').html(twitterListView.render().el);
-//
-//
-//      }
-//    });
-//
-//  }
-//
-//});
-//
-//var twitterRouter = new TwitterRouter();
-//Backbone.history.start();
+var TwitterListItemView = Backbone.View.extend({
+  tagName:"li",
+  template:_.template($('#tpl-twitter-item').html()),
+  render:function (eventName) {
+    $(this.el).html(this.template(this.model.toJSON()));
+    return this;
+  }
+});
+
+var TwitterRouter = Backbone.Router.extend({
+ routes: {
+   "": "displayTweets"
+ },
+ displayTweets: function() {
+  var twitterListView = new TwitterListView({model:twitterCollection});
+   twitterCollection.fetch({
+     success: function(model, response, options) {
+       console.log(model.get('what'));
+       $('#twitterList').append(twitterListView.render().el);
+     }
+   });
+ }
+});
+
+var twitterRouter = new TwitterRouter();
+Backbone.history.start();
