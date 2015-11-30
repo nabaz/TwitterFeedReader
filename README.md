@@ -21,7 +21,11 @@ define('ACCESS_SECRET', 'YOUR_ACCESS_SECRET_KEY');
 
  `
  > you can run this command to test the code locally (Note you have to have php  > 5.4 installed on your machine in order to test)
- `PHP -S localhost:3000 -t PATH_TO_THE_FOLDER`
+
+ `
+ cd into installation folder
+ PHP -S localhost:3000 -t router.php
+ `
 
  > done.
 
