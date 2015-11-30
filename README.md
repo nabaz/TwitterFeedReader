@@ -15,6 +15,7 @@ define('ACCESS_SECRET', 'YOUR_ACCESS_SECRET_KEY');
  `
  composer update
  `
+
 > change the username inside the ./api/index.php to your twitter username (Line 4)
  ```
  $twitter = new TwitterFeedReader('user', 'YOUR_USER_NAME', 10);
