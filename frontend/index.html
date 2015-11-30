@@ -5,15 +5,37 @@
   <link href="css/style.css" rel="stylesheet"/>
 </head>
 <body>
-<div id="twitterList"></div>
-
-<!-- Templates -->
-<script type="text/template" id="tpl-twitter-item">
-  <a href=''><%= name %> @<%= screen_name %></a>
-  <img src="<%= profile_img %>" width="48   "/>
-  <p><%= html %></p>
+<script id="template-list" type="text/template">
+  <% _(models).each(function(model) { %>
+  <span data-cid='<%= model.name %>'>
+    <img src="<%= model.profile_img %>" width="48" style="float: left; padding: 5px;"/>
+  <p><%= model.name %></p>
+  <p><%= model.html %></p>
+  <% }); %>
+  </span>
 </script>
-<!-- JavaScript -->
+
+<div id='content'>
+    <form>
+      <label>Instant Tweet Search:</label>
+      <input type='text' name='what'/><br />
+    </form>
+
+</div>
+  <div id="twitterList"></div>
+
+  <!-- Templates -->
+
+  <script type="text/template" id="tpl-twitter-item">
+    <% _(models).each(function(model) { %>
+    <img src="<%= model.profile_img %>" width="48" style="float: left; padding: 5px;"/>
+
+    <a href=''><%= model.name %> @<%= model.screen_name %></a>
+    <p><%= model.html %></p>
+    <% }); %>
+  </script>
+   <!--JavaScript-->
+
 
 <!-- JavaScript Includes -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
