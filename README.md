@@ -11,6 +11,7 @@ define('API_SECRET', 'YOUR_SECRET_KEY');
 define('ACCESS_KEY', '108222848-YOUR_ACCESS_KEY');
 define('ACCESS_SECRET', 'YOUR_ACCESS_SECRET_KEY');
 ```
+
 > inside ./api run
  `
  composer update
@@ -20,6 +21,7 @@ define('ACCESS_SECRET', 'YOUR_ACCESS_SECRET_KEY');
  ```
  $twitter = new TwitterFeedReader('user', 'YOUR_USER_NAME', 10);
  ```
+
 > you can run this command to test the code locally (Note you have to have php  > 5.4 installed on your machine in order to test)
 
  ```
