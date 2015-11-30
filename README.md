@@ -15,18 +15,18 @@ define('ACCESS_SECRET', 'YOUR_ACCESS_SECRET_KEY');
  `
  composer update
  `
- > change the username inside the ./api/index.php to your twitter username (Line 4)
+> change the username inside the ./api/index.php to your twitter username (Line 4)
  ```
  $twitter = new TwitterFeedReader('user', 'YOUR_USER_NAME', 10);
  ```
- > you can run this command to test the code locally (Note you have to have php  > 5.4 installed on your machine in order to test)
+> you can run this command to test the code locally (Note you have to have php  > 5.4 installed on your machine in order to test)
 
  ```
  cd into installation folder
  PHP -S localhost:3000 -t router.php
  ```
 
- > done.
+> done.
 
 
 # Dependencies
