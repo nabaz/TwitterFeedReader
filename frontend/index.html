@@ -8,10 +8,12 @@
 <div class="search">
     <script id="template-list" type="text/template">
     <% _(models).each(function(model) { %>
-      <span data-cid='<%= model.name %>'>
-        <img src="<%= model.profile_img %>" width="48" class="profile-img"/>
-      <p><%= model.name %> <%= model.screen_name %></p>
-      <p><%= model.twitter_content %></p>
+      <% if (model) { %>
+        <span data-cid='<%= model.cid %>'>
+          <img src="<%= model.profile_img %>" width="68" class="profile-img"/>
+        <h4><%= model.name %> <%= model.screen_name %></h4>
+        <p class="twitter-content"><%= model.twitter_content %></p>
+       <% }; %>
     <% }); %>
     </span>
   </script>
@@ -35,10 +37,15 @@
  <!--JavaScript-->
 
 <!-- JavaScript Includes -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/underscore-min.js"></script>
 <script type="text/javascript" src="js/backbone-min.js"></script>
 <script type="text/javascript" src="js/twitter.js"></script>
 
+<script>
+  setTimeout(function(){
+    window.location.reload(1);
+  }, 60000);
+</script>
 </body>
 </html>
