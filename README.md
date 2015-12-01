@@ -8,7 +8,7 @@
 ```
 define('API_KEY', 'YOUR_API_KEY');
 define('API_SECRET', 'YOUR_SECRET_KEY');
-define('ACCESS_KEY', '108222848-YOUR_ACCESS_KEY');
+define('ACCESS_KEY', 'YOUR_ACCESS_KEY');
 define('ACCESS_SECRET', 'YOUR_ACCESS_SECRET_KEY');
 ```
 

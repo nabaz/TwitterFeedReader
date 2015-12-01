@@ -7,14 +7,14 @@
 <body>
 <div class="search">
     <script id="template-list" type="text/template">
-    <% _(models).each(function(model) { %>
-      <% if (model) { %>
+    <% if (models) { %>
+      <% _(models).each(function(model) { %>
         <span data-cid='<%= model.cid %>'>
           <img src="<%= model.profile_img %>" width="68" class="profile-img"/>
         <h4><%= model.name %> <%= model.screen_name %></h4>
         <p class="twitter-content"><%= model.twitter_content %></p>
-       <% }; %>
-    <% }); %>
+       <% }); %>
+      <% }; %>
     </span>
   </script>
 </div>
