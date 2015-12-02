@@ -10,7 +10,9 @@
     <% if (models) { %>
       <% _(models).each(function(model) { %>
         <span data-cid='<%= model.cid %>'>
-          <img src="<%= model.profile_img %>" width="68" class="profile-img"/>
+          <% if (model.profile_img) { %>
+            <img src="<%= model.profile_img %>"  width="68" class="profile-img"/>
+          <% }; %>
         <h4><%= model.name %> <%= model.screen_name %></h4>
         <p class="twitter-content"><%= model.twitter_content %></p>
         <p class="twitter-content"><%= model.retweet_count %></p>
@@ -26,19 +28,19 @@
       <input type='text' name='what'/><br />
     </form>
 </div>
+<div class="search">
+  <div id="twitterList"></div>
+  <script type="text/template" id="tpl-twitter-item">
+    <% if (typeof(models) === "undefined") { %>
+      <img src="<%= profile_img %>" width="68" class="profile-img"/>
+      <h4><%= name %> @<%= screen_name %></h4>
+      <p class="twitter-content"><%= twitter_content %></p>
+      <p class="twitter-content"><%= retweet_count %></p>
 
-<div id="twitterList"></div>
-<script type="text/template" id="tpl-twitter-item">
-  <% if (typeof(models) === "undefined") { %>
-    <img src="<%= profile_img %>" width="48" style="float: left; padding: 5px;"/>
-    <a href=''><%= name %> @<%= screen_name %></a>
-    <p><%= twitter_content %></p>
-  <p class="twitter-content"><%= retweet_count %></p>
-
-  <% } %>
-</script>
- <!--JavaScript-->
-
+    <% } %>
+  </script>
+   <!--JavaScript-->
+</div>
 <!-- JavaScript Includes -->
 <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="js/underscore-min.js"></script>
