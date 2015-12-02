@@ -33,7 +33,7 @@
   <script type="text/template" id="tpl-twitter-item">
     <% if (typeof(models) === "undefined") { %>
       <img src="<%= profile_img %>" width="68" class="profile-img"/>
-      <h4><%= name %> @<%= screen_name %></h4>
+      <h4><%= name %> <%= screen_name %></h4>
       <p class="twitter-content"><%= twitter_content %></p>
       <p class="twitter-content"><%= retweet_count %></p>
 
