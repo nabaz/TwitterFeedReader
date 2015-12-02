@@ -13,10 +13,10 @@ var TwitterModel = Backbone.Model.extend({
     var what = this.get('what').trim(),
       searchFor = 'twitter_content',
       models;
-    if (jQuery( ".profile-img" ).length > 1) {
-      jQuery( "#twitterList" ).hide();
+    if ($( ".profile-img" ).length > 1) {
+      $( "#twitterList" ).hide();
     }else{
-      jQuery( "#twitterList" ).show();
+      $( "#twitterList" ).show();
     }
     if (what==='') {
       models = this.collection.models;

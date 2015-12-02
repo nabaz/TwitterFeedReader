@@ -13,6 +13,7 @@
           <img src="<%= model.profile_img %>" width="68" class="profile-img"/>
         <h4><%= model.name %> <%= model.screen_name %></h4>
         <p class="twitter-content"><%= model.twitter_content %></p>
+        <p class="twitter-content"><%= model.retweet_count %></p>
        <% }); %>
       <% }; %>
     </span>
@@ -32,6 +33,8 @@
     <img src="<%= profile_img %>" width="48" style="float: left; padding: 5px;"/>
     <a href=''><%= name %> @<%= screen_name %></a>
     <p><%= twitter_content %></p>
+  <p class="twitter-content"><%= retweet_count %></p>
+
   <% } %>
 </script>
  <!--JavaScript-->
