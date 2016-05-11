@@ -53,7 +53,10 @@ hr {
  * images, videos and the bottom of their containers:
  * https://github.com/h5bp/html5-boilerplate/issues/440
  */
-
+ul{
+    padding: 0;
+    margin: 0;
+}
 audio,
 canvas,
 iframe,
@@ -91,30 +94,8 @@ textarea {
     color: #000;
     padding: 0.2em 0;
 }
-
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ==========================================================================
-   Helper classes
-   ========================================================================== */
+h1,h2,h3,h4,h5,h6{    padding: 0;
+    margin: 0;}
 
 /*
  * Hide visually and from screen readers:
@@ -286,4 +267,15 @@ textarea {
 .profile-img{
   float: left;
   padding: 5px;
+}
+.twitter-content{
+    display: block;
+    padding: 0px;
+
+}
+#twitterList{
+    margin-top: -16px;
+}
+form{
+    padding-bottom: 20px;
 }

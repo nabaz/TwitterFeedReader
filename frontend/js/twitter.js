@@ -13,7 +13,11 @@ var TwitterModel = Backbone.Model.extend({
     var what = this.get('what').trim(),
       searchFor = 'twitter_content',
       models;
-
+    if ($( ".profile-img" ).length > 1) {
+      $( "#twitterList" ).hide();
+    }else{
+      $( "#twitterList" ).show();
+    }
     if (what==='') {
       models = this.collection.models;
     } else {
@@ -40,6 +44,14 @@ var BaseView = Backbone.View.extend({
   }
 });
 
+var ItemView = BaseView.extend({
+  events: {
+    'click': function() {
+      console.log(this.model.get('name'));
+    }
+  }
+});
+
 var CollectionView = BaseView.extend({
   initialize: function(opts) {
     this.template = opts.template;
@@ -57,6 +69,15 @@ var CollectionView = BaseView.extend({
   },
   render: function() {
     BaseView.prototype.render.call(this);
+
+    var coll = this.collection;
+    this.$('[data-cid]').each(function(ix, el) {
+      new ItemView({
+        el: el,
+        model: coll.get($(el).data('cid'))
+      });
+    });
+
     return this;
   }
 });
@@ -75,9 +96,8 @@ var FormView = Backbone.View.extend({
 
 var TwitterCollection =  Backbone.Collection.extend({
   model: TwitterModel,
-  url: function(){
-    return "../api/index.php";
-  }
+  url: "../api/index.php"
+
 });
 
 var twitterCollection = new TwitterCollection();
@@ -87,6 +107,7 @@ var inputView = new FormView({
   el: 'form',
   model: flt
 });
+
 var listView = new CollectionView({
   template: _.template($('#template-list').html()),
   collection: flt.filtered
@@ -120,7 +141,6 @@ var TwitterRouter = Backbone.Router.extend({
   var twitterListView = new TwitterListView({model:twitterCollection});
    twitterCollection.fetch({
      success: function(model, response, options) {
-       console.log(model.get('what'));
        $('#twitterList').append(twitterListView.render().el);
      }
    });

@@ -47,14 +47,25 @@ class TwitterFeedReader {
         }
         return $twitter;
     }
-
     public function userProfile() {
+
         $c = new TwitterOAuth(API_KEY, API_SECRET, ACCESS_KEY, ACCESS_SECRET);
 
         $userProfile = $c->get("users/show", array("screen_name" => $this->value));
 
         return $userProfile;
     }
+
+    public function retweetCount() {
+        if ($this->tweet) {
+
+            $retweetCount = $this->isRetweet() ? $this->tweet->retweeted_status->retweet_count : $this->tweet->retweet_count;
+            return $retweetCount;
+        } else
+            trigger_error('Unknown tweet', E_USER_ERROR);
+
+    }
+
     public function hasTweets() {
         return $this->tweets ? true : false;
     }
@@ -146,17 +157,6 @@ class TwitterFeedReader {
         }
 
             return trim($content);
-    }
-
-
-    public function searchQuery($echo = true) {
-        if ($this->type == 'search') {
-            if ($echo)
-                echo $this->value;
-            else
-                return $this->value;
-        } else
-            trigger_error('Twitterfeed is not a search', E_USER_ERROR);
     }
 
     public function userAvatar($echo = true) {
